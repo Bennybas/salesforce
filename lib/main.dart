@@ -10,14 +10,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Bottom NavBar Demo',
+      title: 'Sales Force',
       theme: ThemeData(
-
         scaffoldBackgroundColor: Colors.white,
-        canvasColor: Colors.white, // Override the default light pink background
+        canvasColor: Colors.white,
       ),
-      home: BottomNavBarScreen(),
+      home: LayoutBuilder(
+        builder: (context, constraints) {
+          // Restrict the app width to simulate a mobile screen size
+          return Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 400, // Mobile screen width
+              ),
+              child: BottomNavBarScreen(),
+            ),
+          );
+        },
+      ),
     );
   }
 }
-
