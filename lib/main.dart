@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: 400,  // Mobile screen width
-                maxHeight: 800, // Mobile screen height
               ),
               child: AspectRatio(
                 aspectRatio: 400 / 800, // Ensure the aspect ratio is correct
