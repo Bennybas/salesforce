@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 class PreCallPage extends StatefulWidget {
   @override
   _PreCallPageState createState() => _PreCallPageState();
+
+
 }
 
 class _PreCallPageState extends State<PreCallPage> {
   String? selectedDrugBrand;
   String? selectedHCP;
+  int _currentIndex = 0;
 
   final List<String> drugBrands = ['Brand A', 'Brand B', 'Brand C'];
   final List<String> hcpList = ['Dr. Smith', 'Dr. Johnson', 'Dr. Williams'];
@@ -38,62 +41,71 @@ class _PreCallPageState extends State<PreCallPage> {
 
         slivers: [
           // News Section
-          SliverToBoxAdapter(
-            child: Container(
-              color: Colors.white,
-              padding: EdgeInsets.all(16),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: newsItems.map((news) =>
-                      Container(
-                        width: 250,
-                        margin: EdgeInsets.only(right: 16),
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            color: Color(0xFF89bc0e2),
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 2,
-                              )
-                            ]
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              news['title']!,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              news['description']!,
-                              style: TextStyle(
-                                color: Colors.black87,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              news['date']!,
-                              style: TextStyle(
-                                color: Color(0xff707273),
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                  ).toList(),
+      SliverToBoxAdapter(
+      child: Container(
+      color: Colors.white,
+        padding: EdgeInsets.all(16),
+        child: SizedBox(
+          height: 150, // Set a fixed height for the news section
+          child: PageView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: newsItems.length,
+            itemBuilder: (context, index) {
+              return AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                width: 250, // Base width of each news item
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                padding: EdgeInsets.all(index == _currentIndex ? 16 : 12), // Increase padding for focused item
+                decoration: BoxDecoration(
+                  color: Color(0xFF89bc0e2),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 2,
+                    ),
+                  ],
                 ),
-              ),
-            ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      newsItems[index]['title']!,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: index == _currentIndex ? 18 : 16, // Larger font size for focused item
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      newsItems[index]['description']!,
+                      style: TextStyle(
+                        color: Colors.black87,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      newsItems[index]['date']!,
+                      style: TextStyle(
+                        color: Color(0xff707273),
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index; // Update the current index
+              });
+            },
           ),
+        ),
+      ),
+    ),
+
 
           // Main Content
           SliverToBoxAdapter(
