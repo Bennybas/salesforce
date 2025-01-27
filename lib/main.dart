@@ -10,23 +10,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Sales-Force App',
+      title: 'Sales-force-app',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         canvasColor: Colors.white,
       ),
       home: LayoutBuilder(
         builder: (context, constraints) {
-          // Restrict the app width and height to simulate a mobile screen size
+          // Restrict the app width to simulate a mobile screen size
           return Center(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                maxWidth: 400,  // Mobile screen width
+                maxWidth: 450, // Mobile screen width
               ),
-              child: AspectRatio(
-                aspectRatio: 400 / 800, // Ensure the aspect ratio is correct
-                child: BottomNavBarScreen(),
-              ),
+              child: BottomNavBarScreen(),
             ),
           );
         },
